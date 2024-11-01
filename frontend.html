@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUET T-sell & Buy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #4a90e2, #50bfa1);
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/bgu.png'); /* Your background image path */
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px) brightness(0.6);
+            z-index: -1;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            max-width: 500px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .project-title {
+            font-family: 'Roboto Slab', serif; /* New font for the title */
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #FFD700; /* Gold color for the title */
+        }
+        .subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .role-btn {
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: 600;
+            color:black;
+            background-color: rgb(178, 210, 211);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .role-btn:hover {
+            background-color:rgb(246, 244, 226);
+            color: black;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        footer {
+            position: absolute;
+            bottom: 15px;
+            text-align: center;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div> <!-- Background overlay with blur -->
+    <main>
+        <div class="card">
+            <h1 class="project-title">CUET T-sell & Buy</h1>
+            <p class="subtitle">Buy and sell T-shirts in an easy way.</p>
+            <div class="button-container">
+                <a href="./buyerlogin.html" class="role-btn" id="buyer-btn">Continue as Buyer</a>
+                <a href="./sellerlogin.html" class="role-btn" id="seller-btn">Continue as Seller</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 CUET T-sell & Buy. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Upload & Management</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+        }
+        .container {
+            width: 650px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logout-btn {
+            padding: 8px 12px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #555;
+        }
+        .upload-section {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .upload-section h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .upload-section .add-image {
+            width: 120px;
+            height: 120px;
+            background-color: #d9d9d9;
+            margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .upload-section .add-image:hover {
+            background-color: #bbb;
+        }
+        .upload-section input, .upload-section .post-btn {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+        .upload-section .post-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .upload-section .post-btn:hover {
+            background-color: #a0522d; /* Brown color on hover */
+            transform: scale(1.05);
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        .product-list-section {
+            padding-top: 20px;
+            text-align: center;
+        }
+        .product-list-section button {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+            background-color: #f5f5f5;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .product-list-section button:hover {
+            background-color: #a0522d; /* Brown color on hover */
+            transform: scale(1.05);
+            color: #fff;
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        .product-item {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .product-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .product-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+        }
+        .product-info {
+            flex: 1;
+            margin-left: 20px;
+            color: #333;
+        }
+        .product-info p {
+            margin: 5px 0;
+        }
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .edit-btn, .delete-btn {
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+        .edit-btn {
+            background-color: #4caf50;
+            color: #fff;
+        }
+        .edit-btn:hover {
+            background-color: #45a049;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>COMPANY NAME</h2>
+            <button class="logout-btn">LOG OUT</button>
+        </div>
+
+        <div class="upload-section">
+            <h3>UPLOAD PRODUCT</h3>
+            <div class="add-image">ADD IMAGE</div>
+            <input type="text" id="productName" placeholder="Product Name">
+            <input type="number" id="productQuantity" placeholder="Quantity" value="1">
+            <input type="text" id="productPrice" placeholder="Price">
+            <input type="text" id="productDetails" placeholder="Product Details">
+            <button class="post-btn" onclick="addProduct()">POST</button>
+        </div>
+
+        <div class="product-list-section">
+            <button onclick="window.location.href='productList.html'">YOUR PRODUCT</button>
+            <div id="productList">
+                <!-- Product items will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const productList = document.getElementById("productList");
+
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const quantity = document.getElementById("productQuantity").value;
+            const price = document.getElementById("productPrice").value;
+            const details = document.getElementById("productDetails").value;
+
+            const productItem = document.createElement("div");
+            productItem.className = "product-item";
+
+            productItem.innerHTML = `
+                <img src="https://via.placeholder.com/60" alt="Product Image">
+                <div class="product-info">
+                    <p><strong>Product Name:</strong> ${name}</p>
+                    <p><strong>Price:</strong> ${price} tk</p>
+                    <p><strong>Quantity:</strong> ${quantity}</p>
+                    <p><strong>Details:</strong> ${details}</p>
+                </div>
+                <div class="product-actions">
+                    <button class="edit-btn" onclick="editProduct(this)">✏️</button>
+                    <button class="delete-btn" onclick="deleteProduct(this)">🗑️</button>
+                </div>
+            `;
+
+            productList.appendChild(productItem);
+            clearInputs();
+        }
+
+        function editProduct(button) {
+            const productItem = button.parentNode.parentNode;
+            const name = prompt("Edit Product Name:", productItem.querySelector(".product-info p").innerText.split(": ")[1]);
+            const price = prompt("Edit Price:", productItem.querySelectorAll(".product-info p")[1].innerText.split(": ")[1]);
+            const quantity = prompt("Edit Quantity:", productItem.querySelectorAll(".product-info p")[2].innerText.split(": ")[1]);
+
+            if (name) productItem.querySelector(".product-info p").innerText = "Product Name: " + name;
+            if (price) productItem.querySelectorAll(".product-info p")[1].innerText = "Price: " + price + " tk";
+            if (quantity) productItem.querySelectorAll(".product-info p")[2].innerText = "Quantity: " + quantity;
+        }
+
+        function deleteProduct(button) {
+            button.parentNode.parentNode.remove();
+        }
+
+        function clearInputs() {
+            document.getElementById("productName").value = "";
+            document.getElementById("productQuantity").value = "1";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productDetails").value = "";
+        }
+    </script>
+</body>
+</html>

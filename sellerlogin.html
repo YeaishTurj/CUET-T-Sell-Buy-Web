@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login/Register</title>
+    <link rel="stylesheet" href="sellerlogin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome, Seller!</h1>
+        <p>Please log in or register to continue</p>
+
+        <div class="form-container">
+            <!-- Login Form -->
+            <div class="form-box">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="loginEmail" name="email" placeholder="Email" required>
+                    <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+                    <button type="submit" class="form-btn">Login</button>
+                </form>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="form-box">
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <input type="text" id="registerName" name="name" placeholder="Full Name" required>
+                    <input type="text" id="registerStartupName" name="startupName" placeholder="Startup Name" required>
+                    <input type="email" id="registerEmail" name="email" placeholder="Email" required>
+                    <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+                    <button type="submit" class="form-btn">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding the JS script to handle form submission -->
+    <script>
+        // Simulate login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simulate login check (for now just an alert)
+            if (email === "test@example.com" && password === "password123") {
+                alert("Login successful!");
+            } else {
+                alert("Invalid login credentials!");
+            }
+        });
+
+        // Simulate registration form submission
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('registerName').value;
+            const startupName = document.getElementById('registerStartupName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Simulate a successful registration (just showing an alert for now)
+            alert(`Registration successful for ${name} from ${startupName}!`);
+        });
+    </script>
+</body>
+</html>

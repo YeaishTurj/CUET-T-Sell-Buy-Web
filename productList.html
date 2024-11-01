@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Products</title>
+    <style>
+        /* Basic styling reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color:rgb(210, 205, 205);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        /* Container */
+        .product-container {
+            width: 90%;
+            max-width: 800px;
+            background-color:rgb(231, 231, 216);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            overflow: hidden;
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        /* Product Card */
+        .product-card {
+            display: flex;
+            align-items: center;
+            background-color:rgb(136, 195, 192);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            background-color: #cbd5e0;
+            transform: scale(1.02);
+        }
+        /* Product Image */
+        .product-image {
+            width: 80px;
+            height: 80px;
+            margin-right: 15px;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        /* Product Details */
+        .product-details {
+            flex: 1;
+            color:black;
+        }
+        .product-details p {
+            margin-bottom: 8px;
+        }
+        .product-details .product-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .edit-button {
+            background-color: #4c637e;
+            color: white;
+        }
+        .delete-button {
+            background-color: rgb(132, 98, 98);
+            color: white;
+        }
+        .edit-button:hover {
+            background-color: #357ab7;
+        }
+        .delete-button:hover {
+            background-color: #c97e75;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-container">
+        <h2>Your Product</h2>
+
+        <!-- Product Card Template -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/80" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <p class="product-name">Product Name</p>
+                <p>Price: 3210 tk</p>
+                <p>Quantity: 2</p>
+            </div>
+            <div class="action-buttons">
+                <button class="edit-button" onclick="editProduct(this)">Edit</button>
+                <button class="delete-button" onclick="deleteProduct(this)">Delete</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/80" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <p class="product-name">Product Name</p>
+                <p>Price: 3210 tk</p>
+                <p>Quantity: 2</p>
+            </div>
+            <div class="action-buttons">
+                <button class="edit-button" onclick="editProduct(this)">Edit</button>
+                <button class="delete-button" onclick="deleteProduct(this)">Delete</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/80" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <p class="product-name">Product Name</p>
+                <p>Price: 3210 tk</p>
+                <p>Quantity: 2</p>
+            </div>
+            <div class="action-buttons">
+                <button class="edit-button" onclick="editProduct(this)">Edit</button>
+                <button class="delete-button" onclick="deleteProduct(this)">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle edit action
+        function editProduct(button) {
+            const productCard = button.closest('.product-card');
+            const productName = productCard.querySelector('.product-name').textContent;
+            alert(`Edit product: ${productName}`);
+        }
+
+        // Function to handle delete action
+        function deleteProduct(button) {
+            const productCard = button.closest('.product-card');
+            productCard.remove();
+            alert("Product deleted successfully!");
+        }
+    </script>
+</body>
+</html>
