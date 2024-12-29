@@ -68,7 +68,7 @@
         const fileNameSpan = document.getElementById('fileName');
         const errorMessage = document.getElementById('error-message');
 
-        // Display the selected file name
+       
         imageInput.addEventListener('change', () => {
             const file = imageInput.files[0];
             if (file) {
@@ -76,10 +76,10 @@
             }
         });
 
-        // Handle displaying error messages (if any)
+       
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const message = urlParams.get('message'); // Check if there's a message query parameter
+            const message = urlParams.get('message');
             if (message) {
                 errorMessage.textContent = message;
                 errorMessage.classList.remove('hidden');
