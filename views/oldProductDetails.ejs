@@ -18,7 +18,7 @@
                 <div class="card">
                     <div class="card-image">
                         <img src="<%= product.image %>" alt="<%= product.p_title %>" class="responsive-img">
-                        <span class="card-title"><%= product.p_title %></span>
+                        <span class="card-title"><%= product.op_title %></span>
                     </div>
                     <div class="card-content">
                         <p><%= product.desc %></p>
@@ -42,7 +42,7 @@
                     <div class="card">
                         <div class="card-content">
                             <h5>Place Your Bid</h5>
-                            <form action="/products/<%= product.p_id %>/bid" method="POST">
+                            <form action="/old-products/<%= product.op_id %>/bid" method="POST">
                                 <div class="input-field">
                                     <input type="number" id="bid_price" name="bid_price" step="0.01" min="0" required>
                                     <label for="bid_price">Enter Your Bid (USD)</label>
@@ -72,7 +72,6 @@
                         <p>
                             Email: <a href="mailto:<%= bid.buyer_email %>"><%= bid.buyer_email %></a><br>
                             Bid Amount: <strong><%= bid.bid_price %> USD</strong><br>
-                            Date: <%= new Date(bid.bid_date).toLocaleString() %>
                         </p>
                     </li>
                 <% }); %>

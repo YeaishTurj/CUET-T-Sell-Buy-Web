@@ -4,36 +4,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Products</title>
-    <!-- Tailwind CSS -->
+    <title>Products</title>
+    
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Times New Roman Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet">
+
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="font-serif bg-gray-50">
 
-    <div class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl font-semibold text-center text-teal-800 mb-8">Available Products</h2>
+    <!-- Header Section -->
+    <section class="bg-blue-600 text-white py-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-semibold">Products</h1>
+        </div>
+    </section>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <% products.forEach(function(product) { %>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-                    <div class="relative">
-                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-56 object-cover">
+    <!-- Main Content Section -->
+    <div class="container mx-auto px-4 py-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Explore Our Products</h2>
+
+        <!-- Products List Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% if (products.length > 0) { %>
+                <% products.forEach(product => { %>
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-indigo-500 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500">
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <img src="<%= product.image %>" alt="<%= product.op_title %>" class="w-full h-48 object-cover rounded-md">
+                            </div>
+
+                            <!-- Display product title based on type -->
+                            <h4 class="text-lg font-semibold text-gray-800">
+                                <!-- For old products, use op_title, for new products use p_title -->
+                                <%= product.op_type === 'new' ? product.p_title : product.op_title %>
+                            </h4>
+
+                            <!-- Display product tags (New or Old) -->
+                            <span class="inline-block mt-2 px-3 py-1 text-sm text-white rounded-md 
+                                <%= product.op_type === 'new' ? 'bg-green-500' : 'bg-gray-500' %>">
+                                <%= product.op_type === 'new' ? 'New Product' : 'Old Product' %>
+                            </span>
+
+                            <!-- Display product details based on type (new or old) -->
+                            <% if (product.op_type === 'new') { %>
+                                <p class="mt-2 text-sm text-gray-600"><strong>Price:</strong> $<%= product.price %></p>
+                                <p class="mt-1 text-sm text-gray-600"><strong>Quantity:</strong> <%= product.quantity %></p>
+                                <p class="mt-2 text-sm text-gray-500"><strong>Description:</strong> <%= product.desc %></p>
+                            <% } else if (product.op_type === 'old') { %>
+                                <p class="mt-2 text-sm text-gray-600"><strong>Asking Price:</strong> $<%= product.asking_price %></p>
+                                <p class="mt-1 text-sm text-gray-600"><strong>Available Duration:</strong> <%= product.avail_dur %> days</p>
+                                <p class="mt-2 text-sm text-gray-500"><strong>Description:</strong> <%= product.op_desc %></p>
+                            <% } %>
+                        </div>
+                        <div class="bg-gray-50 px-4 py-3">
+         <!-- Link to product details page -->
+<a href="/<%= product.op_type === 'new' ? 'new-products' : 'old-products' %>/<%= product.op_type === 'new' ? product.p_id : product.op_id %>" class="text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 text-sm font-medium">
+    View Details
+</a>
+
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-teal-800 truncate"><%= product.p_title %></h3>
-                        <p class="text-red-600 font-bold mt-2">$<%= product.price %></p>
-                        <p class="text-gray-700 text-sm mt-2 truncate"><%= product.desc %></p>
-                    </div>
-                    <div class="flex justify-center p-4">
-                        <a href="/products/<%= product.p_id %>" class="bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                            View Details
-                        </a>
-                    </div>
-                </div>
-            <% }); %>
+                <% }) %>
+            <% } else { %>
+                <p class="text-gray-500 text-center">No products available at the moment.</p>
+            <% } %>
         </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-100 py-6 mt-12">
+        <div class="text-center text-sm text-gray-600">
+            <p>© 2024 Product Dashboard. All Rights Reserved.</p>
+        </div>
+    </footer>
 
 </body>
 

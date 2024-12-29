@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - <%= product.p_title %></title>
+
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Times New Roman Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="font-serif bg-gray-50">
+
+    <!-- Header Section -->
+    <section class="bg-blue-600 text-white py-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-semibold">Product Details</h1>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Product Image -->
+            <div>
+                <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-96 object-cover rounded-md">
+            </div>
+
+            <!-- Product Details -->
+            <div>
+                <h2 class="text-3xl font-semibold text-gray-800"><%= product.p_title %></h2>
+                <p class="mt-4 text-xl text-gray-600"><strong>Price:</strong> $<%= product.price %></p>
+                <p class="mt-2 text-lg text-gray-600"><strong>Quantity:</strong> <%= product.quantity %> available</p>
+                <p class="mt-4 text-lg text-gray-500"><strong>Description:</strong> <%= product.desc %></p>
+
+                <!-- Add to Cart Section -->
+                <% if (isInCart) { %>
+                    <p class="mt-6 text-lg text-green-600 font-semibold">This product is already in your cart!</p>
+                <% } else { %>
+                    <form action="/cart/add" method="POST" class="mt-6">
+                        <input type="hidden" name="p_id" value="<%= product.p_id %>">
+                        <button type="submit" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
+                            Add to Cart
+                        </button>
+                    </form>
+                <% } %>
+
+                <!-- Additional Product Information -->
+                <div class="mt-6">
+                    <a href="/products" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
+                        Back to Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-100 py-6 mt-12">
+        <div class="text-center text-sm text-gray-600">
+            <p>© 2024 Product Dashboard. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

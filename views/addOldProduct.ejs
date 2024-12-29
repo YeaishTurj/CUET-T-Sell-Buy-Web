@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Old Product</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-8">
+        <h2 class="text-3xl font-semibold text-center text-gray-900 mb-8">Add Your Old Product</h2>
+
+        <!-- Product Form -->
+        <form action="/seller/old-products" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <!-- Product Title -->
+            <div class="mb-6">
+                <label for="op_title" class="block text-lg font-medium text-gray-700">Product Title</label>
+                <input type="text" name="op_title" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Enter Product Title" />
+            </div>
+
+            <!-- Asking Price -->
+            <div class="mb-6">
+                <label for="asking_price" class="block text-lg font-medium text-gray-700">Asking Price</label>
+                <input type="number" name="asking_price" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Enter Asking Price" />
+            </div>
+
+            <!-- Availability Duration -->
+            <div class="mb-6">
+                <label for="avail_dur" class="block text-lg font-medium text-gray-700">Availability Duration (in days)</label>
+                <input type="number" name="avail_dur" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Enter Availability Duration" />
+            </div>
+
+            <!-- Product Description -->
+            <div class="mb-6">
+                <label for="op_desc" class="block text-lg font-medium text-gray-700">Product Description</label>
+                <textarea name="op_desc" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Enter Product Description"></textarea>
+            </div>
+
+            <!-- Product Image Upload -->
+            <div class="mb-6">
+                <label for="image" class="block text-lg font-medium text-gray-700">Product Image (optional)</label>
+                <input type="file" name="image" accept="image/*" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
+                    Add Product
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>
