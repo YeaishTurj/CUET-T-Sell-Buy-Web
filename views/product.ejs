@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Products</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-semibold text-center text-teal-800 mb-8">Available Products</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <% products.forEach(function(product) { %>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="relative">
+                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-56 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-teal-800 truncate"><%= product.p_title %></h3>
+                        <p class="text-red-600 font-bold mt-2">$<%= product.price %></p>
+                        <p class="text-gray-700 text-sm mt-2 truncate"><%= product.desc %></p>
+                    </div>
+                    <div class="flex justify-center p-4">
+                        <a href="/products/<%= product.p_id %>" class="bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+</body>
+
+</html>

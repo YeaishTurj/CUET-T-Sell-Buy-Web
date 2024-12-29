@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-8">
+        <h2 class="text-3xl font-semibold text-center text-gray-900 mb-8">Add New Product</h2>
+
+        <!-- Product Form -->
+        <form action="/seller/products" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+            <!-- Product Title -->
+            <div class="mb-6">
+                <label for="p_title" class="block text-lg font-medium text-gray-700">Product Title</label>
+                <input type="text" id="p_title" name="p_title" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+
+            <!-- Price -->
+            <div class="mb-6">
+                <label for="price" class="block text-lg font-medium text-gray-700">Price (USD)</label>
+                <input type="number" id="price" name="price" required min="0" step="0.01" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+
+            <!-- Quantity -->
+            <div class="mb-6">
+                <label for="quantity" class="block text-lg font-medium text-gray-700">Quantity</label>
+                <input type="number" id="quantity" name="quantity" required min="1" class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            </div>
+
+            <!-- Description -->
+            <div class="mb-6">
+                <label for="desc" class="block text-lg font-medium text-gray-700">Description</label>
+                <textarea id="desc" name="desc" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-6">
+                <label for="image" class="block text-lg font-medium text-gray-700">Product Image</label>
+                <input type="file" id="image" name="image" accept="image/*" required class="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+                <span id="fileName" class="text-sm text-gray-500 mt-1 block"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
+                    Add Product
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tailwind JS for File Input Display -->
+    <script>
+        const imageInput = document.getElementById('image');
+        const fileNameSpan = document.getElementById('fileName');
+
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (file) {
+                fileNameSpan.textContent = `Selected: ${file.name}`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

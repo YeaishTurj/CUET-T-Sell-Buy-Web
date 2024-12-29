@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= role.charAt(0).toUpperCase() + role.slice(1) %> Authentication</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for tabs */
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-link {
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tab-link.active {
+            border-bottom: 2px solid #4CAF50;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+
+    <div class="container mx-auto p-6 sm:p-8">
+        <h1 class="text-center text-3xl font-semibold mb-6"><%= role.charAt(0).toUpperCase() + role.slice(1) %> Authentication</h1>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs mb-6 flex flex-wrap justify-center sm:justify-start">
+            <div id="register-tab" class="tab-link px-4 py-2 text-gray-800 hover:text-green-600 cursor-pointer sm:mr-4 mb-4 sm:mb-0">Register</div>
+            <div id="login-tab" class="tab-link px-4 py-2 text-gray-800 hover:text-green-600 cursor-pointer sm:mr-4 mb-4 sm:mb-0">Login</div>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="register-content" class="tab-content hidden">
+            <form action="/register/<%= role %>" method="POST" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                    <input type="text" id="phone" name="phone" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <% if (role === 'seller') { %>
+                    <div class="space-y-2">
+                        <label for="stup_name" class="block text-sm font-medium text-gray-700">Store Name</label>
+                        <input type="text" id="stup_name" name="stup_name" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="wp_no" class="block text-sm font-medium text-gray-700">WhatsApp Number</label>
+                        <input type="text" id="wp_no" name="wp_no" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="fb_link" class="block text-sm font-medium text-gray-700">Facebook Link</label>
+                        <input type="url" id="fb_link" name="fb_link" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                <% } else { %>
+                    <div class="space-y-2">
+                        <label for="buyer_name" class="block text-sm font-medium text-gray-700">Buyer Name</label>
+                        <input type="text" id="buyer_name" name="buyer_name" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                <% } %>
+
+                <button class="w-full py-3 px-4 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500" type="submit">Register</button>
+            </form>
+        </div>
+
+        <div id="login-content" class="tab-content hidden">
+            <form action="/login/<%= role %>" method="POST" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="login-email" name="email" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" name="password" required class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <button class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const registerTab = document.getElementById('register-tab');
+        const loginTab = document.getElementById('login-tab');
+        const registerContent = document.getElementById('register-content');
+        const loginContent = document.getElementById('login-content');
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerContent.classList.remove('hidden');
+            loginContent.classList.add('hidden');
+        });
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginContent.classList.remove('hidden');
+            registerContent.classList.add('hidden');
+        });
+
+        // Set default active tab
+        registerTab.classList.add('active');
+        registerContent.classList.remove('hidden');
+    </script>
+</body>
+
+</html>
