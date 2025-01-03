@@ -17,7 +17,7 @@
 <body class="font-serif bg-gray-50">
 
     <!-- Header Section -->
-    <section class="bg-blue-600 text-white py-6">
+    <section class="bg-gray-800 text-white py-6">
         <div class="container mx-auto text-center">
             <h1 class="text-3xl font-semibold">Products</h1>
         </div>
@@ -31,7 +31,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <% if (products.length > 0) { %>
                 <% products.forEach(product => { %>
-                    <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-indigo-500 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500">
+                    <div class="bg-gray-300 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-indigo-500 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500">
                         <div class="p-4">
                             <div class="mb-4">
                                 <img src="<%= product.image %>" alt="<%= product.op_title %>" class="w-full h-48 object-cover rounded-md">

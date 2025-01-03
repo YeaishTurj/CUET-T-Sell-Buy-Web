@@ -19,21 +19,19 @@
     <div class="flex h-screen">
 
         <!-- Sidebar -->
-        <div class="w-64 bg-indigo-600 text-white p-6 flex flex-col justify-between shadow-xl transition-all duration-300 ease-in-out">
+        <div class="w-64 bg-[rgb(72,72,72)] text-white p-6 flex flex-col justify-between shadow-xl transition-all duration-300 ease-in-out">
             <div>
                 <h1 class="text-3xl font-semibold mb-8">Seller Dashboard</h1>
                 <nav>
                     <ul>
                         <li class="mb-6">
-                            <a href="/seller" class="text-lg hover:text-indigo-200 transition-colors">Dashboard</a>
+                          
                         </li>
                         <li class="mb-6">
-                            <a href="/seller/new-products" class="text-lg hover:text-indigo-200 transition-colors">New Products</a>
+                            <a href="/seller/new-products" class="text-lg hover:text-indigo-200 transition-colors">Add New Products</a>
                         </li>
                         <li class="mb-6">
-                            <a href="/seller/old-products" class="text-lg hover:text-indigo-200 transition-colors">Old Products</a>
-                        </li>
-                    </ul>
+                          <a href="/seller/old-products" class="text-lg hover:text-indigo-200 transition-colors">Add Old Products</a>
                 </nav>
             </div>
             <div>
@@ -42,12 +40,12 @@
         </div>
 
         <!-- Main Content Area -->
-        <div class="flex-1 p-8 overflow-y-auto">
+        <div class="flex-1 p-8 overflow-y-auto bg-gray-300">
 
             <!-- Header Section -->
             <div class="mb-12">
                 <h2 class="text-3xl font-semibold text-gray-800">Welcome, <%= user.email %></h2>
-                <p class="mt-2 text-lg text-gray-600">Your Role: <strong><%= user.role %></strong></p>
+                <p class="mt-2 text-lg text-gray-700">Your Role: <strong><%= user.role %></strong></p>
             </div>
 
             <!-- Section: New Products -->
@@ -56,13 +54,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <% if (products.length > 0) { %>
                         <% products.forEach(product => { %>
-                            <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                            <div class="bg-gray-100 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                                 <div class="p-4">
                                     <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-48 object-cover rounded-md mb-4">
                                     <h4 class="text-xl font-semibold text-gray-800"><%= product.p_title %></h4>
                                     <p class="text-gray-600 mt-2"><strong>Price:</strong> $<%= product.price %></p>
                                     <p class="text-gray-500 mt-2"><%= product.desc.substring(0, 100) %>...</p>
-                                    <a href="/products/<%= product.p_id %>" class="inline-block mt-4 text-indigo-600 hover:text-indigo-500 text-sm font-medium">View Details</a>
+                                    
                                 </div>
                             </div>
                         <% }) %>

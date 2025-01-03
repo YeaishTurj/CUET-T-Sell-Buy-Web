@@ -17,13 +17,13 @@
                 <!-- Product Details -->
                 <div class="card">
                     <div class="card-image">
-                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="responsive-img">
+                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="responsive-img w-32 h-32 object-contain">
+
                         <span class="card-title"><%= product.op_title %></span>
                     </div>
                     <div class="card-content">
                         <p><%= product.desc %></p>
-                        <p><strong>Price:</strong> <%= product.price %> USD</p>
-                        <p><strong>Quantity Available:</strong> <%= product.quantity %></p>
+                        
                     </div>
                 </div>
 
