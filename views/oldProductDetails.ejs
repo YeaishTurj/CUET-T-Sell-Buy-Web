@@ -5,25 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= product.p_title %> - Product Details</title>
+
     <!-- Materialize CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/materialize-css@1.0.0/dist/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f9fafb;
+        }
+
+        .card-title {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .collection-item p {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="blue darken-3">
+        <div class="nav-wrapper container">
+            <a href="/" class="brand-logo">Product Dashboard</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">All Products</a></li>
+                <li><a href="/logout" class="waves-effect waves-light btn red">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
+        <!-- Product Details -->
         <div class="row">
             <div class="col s12 m8 offset-m2">
-                <!-- Product Details -->
                 <div class="card">
                     <div class="card-image">
-                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="responsive-img w-32 h-32 object-contain">
-
+                        <img src="<%= product.image %>" alt="<%= product.p_title %>" class="responsive-img">
                         <span class="card-title"><%= product.op_title %></span>
                     </div>
                     <div class="card-content">
                         <p><%= product.desc %></p>
-                        
+                        <p><strong>Price:</strong> $<%= product.price %> USD</p>
+                        <p><strong>Quantity Available:</strong> <%= product.quantity %></p>
                     </div>
                 </div>
 
@@ -47,7 +78,7 @@
                                     <input type="number" id="bid_price" name="bid_price" step="0.01" min="0" required>
                                     <label for="bid_price">Enter Your Bid (USD)</label>
                                 </div>
-                                <button type="submit" class="btn waves-effect waves-light">Place Bid</button>
+                                <button type="submit" class="btn waves-effect waves-light green">Place Bid</button>
                             </form>
                         </div>
                     </div>
@@ -59,38 +90,47 @@
                     </div>
                 <% } %>
 
-<!-- Display Bids -->
-<div class="card">
-    <div class="card-content">
-        <h5>All Bids (Sorted by Price)</h5>
-        <% if (bids.length > 0) { %>
-            <ul class="collection">
-                <% bids.sort((a, b) => b.bid_price - a.bid_price).forEach(function(bid) { %> <!-- Sort here -->
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle blue">account_circle</i>
-                        <span class="title"><strong><%= bid.buyer_name %></strong></span>
-                        <p>
-                            Email: <a href="mailto:<%= bid.buyer_email %>"><%= bid.buyer_email %></a><br>
-                            Bid Amount: <strong><%= bid.bid_price %> USD</strong><br>
-                        </p>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } else { %>
-            <p class="grey-text">No bids yet for this product.</p>
-        <% } %>
-    </div>
-</div>
-
-
+                <!-- Display Bids -->
+                <div class="card">
+                    <div class="card-content">
+                        <h5>All Bids (Sorted by Price)</h5>
+                        <% if (bids.length > 0) { %>
+                            <ul class="collection">
+                                <% bids.sort((a, b) => b.bid_price - a.bid_price).forEach(function(bid) { %>
+                                    <li class="collection-item avatar">
+                                        <i class="material-icons circle blue">account_circle</i>
+                                        <span class="title"><strong><%= bid.buyer_name %></strong></span>
+                                        <p>
+                                            Email: <a href="mailto:<%= bid.buyer_email %>"><%= bid.buyer_email %></a><br>
+                                            Bid Amount: <strong>$<%= bid.bid_price %> USD</strong>
+                                        </p>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                        <% } else { %>
+                            <p class="grey-text">No bids yet for this product.</p>
+                        <% } %>
+                    </div>
+                </div>
 
                 <!-- Back Button -->
                 <div class="center-align">
-                    <a href="/products" class="btn waves-effect waves-light">Back to Products</a>
+                    <a href="/products" class="btn waves-effect waves-light blue darken-3">Back to Products</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="page-footer blue darken-3">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 center-align">
+                    <p class="grey-text text-lighten-4">© 2024 Product Dashboard. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Materialize JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

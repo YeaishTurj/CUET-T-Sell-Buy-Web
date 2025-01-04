@@ -6,64 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - <%= product.p_title %></title>
 
-    <!-- Tailwind CSS for styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Times New Roman Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap" rel="stylesheet">
-
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="font-serif bg-gray-50">
+<body class="font-inter bg-gray-50">
+
+    <!-- Sticky Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="text-2xl font-bold text-blue-600">Product Dashboard</a>
+
+            <!-- Navigation Links -->
+            <div class="space-x-6">
+                <a href="/" class="text-gray-700 hover:text-blue-600 font-medium transition">Home</a>
+                <a href="/products" class="text-gray-700 hover:text-blue-600 font-medium transition">All Products</a>
+                <a href="/logout" class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md font-medium transition">Logout</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- Header Section -->
-    <section class="bg-gray-800 text-white py-6">
+    <section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-12">
         <div class="container mx-auto text-center">
-            <h1 class="text-3xl font-semibold">Product Details</h1>
+            <h1 class="text-4xl font-bold">Product Details</h1>
         </div>
     </section>
 
     <!-- Main Content Section -->
-    <div class="container mx-auto px-4 py-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <!-- Product Image -->
             <div>
-                <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-96 object-cover rounded-md">
+                <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-96 object-cover rounded-lg shadow-md">
             </div>
 
             <!-- Product Details -->
             <div>
-                <h2 class="text-3xl font-semibold text-gray-800"><%= product.p_title %></h2>
-                <p class="mt-4 text-xl text-gray-600"><strong>Price:</strong> $<%= product.price %></p>
-                <p class="mt-2 text-lg text-gray-600"><strong>Quantity:</strong> <%= product.quantity %> available</p>
-                <p class="mt-4 text-lg text-gray-500"><strong>Description:</strong> <%= product.desc %></p>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4"><%= product.p_title %></h2>
+                <p class="text-lg text-gray-600 mb-2"><strong>Price:</strong> $<%= product.price %></p>
+                <p class="text-lg text-gray-600 mb-4"><strong>Quantity:</strong> <%= product.quantity %> available</p>
+                <p class="text-gray-500 leading-relaxed mb-6"><strong>Description:</strong> <%= product.desc %></p>
 
                 <!-- Add to Cart Section -->
                 <% if (isInCart) { %>
-                    <p class="mt-6 text-lg text-green-600 font-semibold">This product is already in your cart!</p>
+                    <p class="text-lg text-green-600 font-semibold mb-6">This product is already in your cart!</p>
                 <% } else { %>
-                    <form action="/cart/add" method="POST" class="mt-6">
+                    <form action="/cart/add" method="POST" class="mb-4">
                         <input type="hidden" name="p_id" value="<%= product.p_id %>">
-                        <button type="submit" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
+                        <button type="submit" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition">
                             Add to Cart
                         </button>
                     </form>
                 <% } %>
 
-                <!-- Additional Product Information -->
-                <div class="mt-6">
-                    <a href="/products" class="inline-block bg-gray-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
-                        Back to Products
-                    </a>
-                </div>
+                <!-- Order Button -->
+                <form action="/orders" method="POST" class="mb-6">
+                    <input type="hidden" name="p_id" value="<%= product.p_id %>">
+                    <button type="submit" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transition">
+                        Order Now
+                    </button>
+                </form>
+
+                <!-- Back to Products Button -->
+                <a href="/products" class="inline-block bg-gray-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 transition">
+                    Back to Products
+                </a>
             </div>
         </div>
     </div>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-200 py-6 mt-12">
-        <div class="text-center text-sm text-gray-600">
-            <p>© 2024 Product Dashboard. All Rights Reserved.</p>
+    <footer class="bg-gray-100 py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm text-gray-600">© 2024 Product Dashboard. All Rights Reserved.</p>
         </div>
     </footer>
 

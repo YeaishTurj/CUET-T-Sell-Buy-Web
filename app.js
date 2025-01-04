@@ -139,8 +139,6 @@ app.get('/seller/orders', authenticateSession, (req, res) => {
 });
 
 
-
-
 app.post('/register/buyer', async (req, res) => {
   const { email, password, phone, buyer_name } = req.body;
   try {
@@ -527,6 +525,29 @@ app.get("/new-products/:id", authenticateSession, (req, res) => {
   });
 });
 
+app.post("/new-products/delete/:id", authenticateSession, (req, res) => {
+  const { id } = req.params;
+
+  db.query("DELETE FROM New_Product WHERE p_id = ?", [id], (err) => {
+      if (err) {
+          return res.status(500).send("Error deleting product.");
+      }
+      res.redirect("/seller-dashboard"); // Redirect to the new products page
+  });
+});
+
+app.post("/old-products/delete/:id", authenticateSession, (req, res) => {
+  const { id } = req.params;
+
+  db.query("DELETE FROM Old_Product WHERE op_id = ?", [id], (err) => {
+      if (err) {
+          return res.status(500).send("Error deleting product.");
+      }
+      res.redirect("/seller-dashboard"); // Redirect to the old products page
+  });
+});
+
+
 app.post("/cart/confirm-order", authenticateSession, (req, res) => {
   const user_id = req.session.user.user_id;
 
@@ -636,34 +657,88 @@ app.post("/seller/new-products", authenticateSession, upload.single('image'), (r
 app.post('/cart/add', authenticateSession, (req, res) => {
   const { p_id } = req.body; 
   const user_id = req.session.user.user_id;
-  
+
+  // Validate input
   if (!p_id) {
     return res.status(400).json({ success: false, message: "Product ID is required" });
   }
 
- 
+  // Check if the product exists
   db.query("SELECT * FROM New_Product WHERE p_id = ?", [p_id], (err, rows) => {
     if (err) return res.status(500).json({ success: false, error: err.message });
     if (rows.length === 0) return res.status(404).json({ success: false, message: "Product not found" });
 
-   
-    db.query("SELECT * FROM Cart WHERE user_id = ? AND p_id = ?", [user_id, p_id], (err, cartRows) => {
+    // Check if the user already has a cart
+    db.query("SELECT * FROM Cart WHERE user_id = ?", [user_id], (err, cartRows) => {
       if (err) return res.status(500).json({ success: false, error: err.message });
 
-      if (cartRows.length > 0) {
-        return res.status(400).json({ success: false, message: "Product already in cart" });
-      }
+      // If the user doesn't have a cart, create one
+      if (cartRows.length === 0) {
+        db.query("INSERT INTO Cart (user_id) VALUES (?)", [user_id], (err, result) => {
+          if (err) return res.status(500).json({ success: false, error: err.message });
+          
+          const cart_id = result.insertId;
 
-     
-      db.query("INSERT INTO Cart (user_id, p_id) VALUES (?, ?)", [user_id, p_id], (err, result) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.status(200).json({ success: true, message: "Product added to cart successfully" });
-      });
+          // Add product to 'contains' table
+          db.query("INSERT INTO contains (cart_item_id, p_id) VALUES (?, ?)", [cart_id, p_id], (err, result) => {
+            if (err) return res.status(500).json({ success: false, error: err.message });
+            res.status(200).json({ success: true, message: "Product added to cart successfully" });
+          });
+        });
+      } else {
+        // Cart exists, check if the product is already in the cart
+        const cart_id = cartRows[0].cart_id;
+
+        db.query("SELECT * FROM contains WHERE cart_item_id = ? AND p_id = ?", [cart_id, p_id], (err, containsRows) => {
+          if (err) return res.status(500).json({ success: false, error: err.message });
+
+          if (containsRows.length > 0) {
+            return res.status(400).json({ success: false, message: "Product already in cart" });
+          }
+
+          // If product is not in cart, add it to 'contains' table
+          db.query("INSERT INTO contains (cart_item_id, p_id) VALUES (?, ?)", [cart_id, p_id], (err, result) => {
+            if (err) return res.status(500).json({ success: false, error: err.message });
+            res.status(200).json({ success: true, message: "Product added to cart successfully" });
+          });
+        });
+      }
     });
   });
 });
 
+// POST /orders endpoint
+app.post('/orders', (req, res) => {
+  // Check if the user is logged in
+  if (!req.session.user) {
+      return res.status(401).json({ message: 'You must be logged in to place an order.' });
+  }
 
+  // Extract user information and order details
+  const userId = req.session.user.user_id; // User ID from session
+  const { p_id } = req.body; // Product ID from the request body
+
+  if (!p_id) {
+      return res.status(400).json({ message: 'Product ID is required.' });
+  }
+
+  // Insert the order into the database
+  const o_date = new Date().toISOString().slice(0, 10); // Current date in YYYY-MM-DD format
+  const orderData = {
+      o_date,
+      p_id,
+      user_id: userId
+  };
+
+  const insertQuery = 'INSERT INTO `order` (o_date, p_id, user_id) VALUES (?, ?, ?)';
+  db.query(insertQuery, [orderData.o_date, orderData.p_id, orderData.user_id], (err, result) => {
+      if (err) {
+          console.error('Error inserting order:', err);
+          return res.status(500).json({ message: 'Internal server error.' });
+      }
+      res.status(201).json({ message: 'Order created successfully.', orderId: result.insertId });
+  });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
