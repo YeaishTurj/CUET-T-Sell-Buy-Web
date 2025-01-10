@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Won Bids</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+
+    .product-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .product-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+      transition: background 0.3s ease;
+    }
+
+    .product-item:hover {
+      background: #f1f1f1;
+    }
+
+    .product-title {
+      font-size: 18px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .product-price {
+      font-size: 16px;
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .navbar {
+      background-color: #2c3e50;
+      position: sticky;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+        padding: 10px 20px;
+       top:0;
+    }
+
+    .navbar a {
+      color: white;
+      font-size: 18px;
+      padding: 15px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a href="http://localhost:5000/buyer-dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+
+  <div class="container">
+    <h1>Won Bids for <%= email %></h1>
+
+    <% if (products.length > 0) { %>
+      <ul class="product-list">
+        <% products.forEach(product => { %>
+            <li class="product-item flex items-center justify-between p-4 border-b border-gray-200 hover:bg-gray-50">
+                <div>
+                  <h3 class="product-title text-lg font-semibold text-gray-900"><%= product.op_title %></h3>
+                  <p class="product-price text-sm text-gray-600"><%= product.selling_price %> Taka</p>
+                </div>
+                <div>
+                    <a href="/old-products/<%= product.op_id %>" 
+                        class="inline-block px-6 py-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm font-medium shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                        View Details
+                     </a>                     
+                </div>
+              </li>
+              
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No bids won yet.</p>
+    <% } %>
+  </div>
+
+</body>
+</html>

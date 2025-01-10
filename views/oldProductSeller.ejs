@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.op_title %> - Product Details</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+      background-color: #2c3e50;
+      position: sticky;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+        padding: 10px 20px;
+       top:0;
+    }
+
+    .navbar a {
+      color: white;
+      font-size: 18px;
+      padding: 15px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            color: #212529;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #6c757d;
+        }
+
+        /* Product Image */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Editable Product Details Section */
+        .details {
+            margin-bottom: 50px;
+        }
+
+        .details h2 {
+            font-size: 2em;
+            color: #212529;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 1.1em;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 14px 22px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Bids Section */
+        .bids {
+            margin-bottom: 40px;
+        }
+
+        .bid-item {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #007bff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .bid-item label {
+            font-size: 1.1em;
+            color: #495057;
+        }
+
+        .bid-item p {
+            margin: 6px 0;
+            color: #6c757d;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .btn {
+                font-size: 1em;
+                padding: 12px 18px;
+            }
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+      <!-- Navbar -->
+  <nav class="navbar">
+    <a href="http://localhost:5000/seller-dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+  </nav>
+    <div class="container">
+
+        <!-- Product Header -->
+        <div class="header">
+            <h1><%= product.op_title %></h1>
+            <p>Manage product details and permit orders from selected bids</p>
+        </div>
+
+        <!-- Product Image -->
+        <img src="<%= product.image %>" alt="<%= product.op_title %>">
+
+        <!-- Editable Product Details -->
+        <div class="details">
+            <h2>Edit Product</h2>
+            <form action="/update-old-product/<%= product.op_id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <label for="op_title">Title:</label>
+                    <input type="text" id="op_title" name="op_title" value="<%= product.op_title %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="asking_price">Asking Price (Taka):</label>
+                    <input type="number" id="asking_price" name="asking_price" value="<%= product.asking_price %>" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="avail_dur">Availability Duration (Minutes):</label>
+                    <input type="number" id="avail_dur" name="avail_dur" value="<%= product.avail_dur %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="op_desc">Description:</label>
+                    <textarea id="op_desc" name="op_desc" rows="4" required><%= product.op_desc %></textarea>
+                </div>
+
+                <button type="submit" class="btn">Update Product</button>
+            </form>
+        </div>
+
+        <!-- Bids Section -->
+        <form action="/permit-order/<%= product.op_id %>?_method=PUT" method="POST" id="permitOrderForm">
+            <div class="bids">
+                <h2>Bid Selection</h2>
+                <% if (bids.length > 0) { %>
+                    <% bids.sort((a, b) => b.bid_price - a.bid_price).forEach(function(element) { %>
+                        <div class="bid-item">
+                            <label>
+                                <!-- Combine user_id and bid_price in a single value -->
+                                <input type="radio" name="selectedBid" value="<%= element.user_id %>|<%= element.bid_price %>" required>
+                                <strong>Price:</strong> $<%= element.bid_price %> <br>
+                                <strong>User ID:</strong> <%= element.user_id %> <br>
+                                <strong>Email:</strong> <%= element.buyer_email %>
+                            </label>
+                        </div>
+                    <button type="submit" class="btn" id="permitButton">Give Permit to Order</button>
+                    <% }); %>
+                <% } else { %>
+                    <p>No bids have been placed on this product yet.</p>
+                <% } %>
+        
+                
+            </div>
+        </form>
+        
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Product Dashboard. All Rights Reserved. <a href="/terms">Terms & Conditions</a></p>
+        </div>
+
+    </div>
+
+    <script>
+        // Confirmation before submitting the permit order form
+        const form = document.getElementById('permitOrderForm');
+        const submitButton = document.getElementById('permitButton');
+
+        submitButton.addEventListener('click', function(event) {
+            const confirmation = confirm("Are you sure you want to permit this user to place an order?");
+            if (!confirmation) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
