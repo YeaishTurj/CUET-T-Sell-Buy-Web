@@ -206,7 +206,7 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="http://localhost:5000/buyer-dashboard">Dashboard</a>
+    <a href="http://localhost:55000/buyer-dashboard">Dashboard</a>
     <a href="/logout">Logout</a>
   </nav>
 
@@ -279,7 +279,7 @@
       <% if (bids.length > 0) { %>
         <% bids.sort((a, b) => b.bid_price - a.bid_price).forEach(function(bid) { %>
           <div class="bid-item">
-            <p><strong><%= bid.buyer_name %></strong> placed a bid of <span class="bid-price">$<%= bid.bid_price %> USD</span></p>
+            <p><strong><%= bid.buyer_name %></strong> placed a bid of <span class="bid-price"><%= bid.bid_price %> Taka</span></p>
             <p>Email: <a href="mailto:<%= bid.buyer_email %>"><%= bid.buyer_email %></a></p>
           </div>
         <% }); %>

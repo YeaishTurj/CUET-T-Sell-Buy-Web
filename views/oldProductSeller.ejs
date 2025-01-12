@@ -200,7 +200,7 @@
 <body>
       <!-- Navbar -->
   <nav class="navbar">
-    <a href="http://localhost:5000/seller-dashboard">Dashboard</a>
+    <a href="http://localhost:55000/seller-dashboard">Dashboard</a>
     <a href="/logout">Logout</a>
   </nav>
     <div class="container">
@@ -257,8 +257,8 @@
                                 <strong>Email:</strong> <%= element.buyer_email %>
                             </label>
                         </div>
-                    <button type="submit" class="btn" id="permitButton">Give Permit to Order</button>
-                    <% }); %>
+                    
+                    <% }); %><button type="submit" class="btn" id="permitButton">Give Permit to Order</button>
                 <% } else { %>
                     <p>No bids have been placed on this product yet.</p>
                 <% } %>

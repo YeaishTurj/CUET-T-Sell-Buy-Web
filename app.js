@@ -796,7 +796,7 @@ app.put('/update-old-product/:id', (req, res) => {
   );
 
   console.log(`Product with ID ${productId} updated`);
-  res.redirect(`http://localhost:5000/seller-dashboard`); 
+  res.redirect(`http://localhost:55000/seller-dashboard`); 
 });
 
 // permit order to be processed by a selected user
@@ -814,7 +814,7 @@ app.put('/permit-order/:id', (req, res) => {
   );
 
   console.log(`Order with ID ${oldProductID} permitted to be processed by user with ID ${userID}`);
-  res.redirect('http://localhost:5000/seller-dashboard'); // Redirect to the seller dashboard or wherever you prefer
+  res.redirect('http://localhost:55000/seller-dashboard'); // Redirect to the seller dashboard or wherever you prefer
 });
 
 // won bid
@@ -899,7 +899,7 @@ app.put('/update-new-product/:id', (req, res) => {
   );
 
   console.log(`Product with ID ${productId} updated`);
-  res.redirect('http://localhost:5000/seller-dashboard'); 
+  res.redirect('http://localhost:55000/seller-dashboard'); 
 });
 
 
