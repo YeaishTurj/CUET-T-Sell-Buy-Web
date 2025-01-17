@@ -821,6 +821,7 @@ app.put('/permit-order/:id', (req, res) => {
 app.get('/wonBids/:email', (req, res) => {
   const { email } = req.params;
 
+  // Query to fetch user ID
   db.query('SELECT user_id FROM User WHERE email = ?', [email], (err, result) => {
     if (err) {
       console.error('Error fetching user ID:', err);
@@ -833,18 +834,34 @@ app.get('/wonBids/:email', (req, res) => {
 
     const userID = result[0].user_id;
 
-    // Query Old_Product table for products where canOrder == userID
-    db.query('SELECT * FROM Old_Product WHERE canOrder = ?', [userID], (err, products) => {
-      if (err) {
-        console.error('Error fetching won bids:', err);
-        return res.status(500).json({ error: 'Internal server error' });
-      }
+    // Query to fetch all bids for the user
+    db.query(
+      'SELECT Old_Product.op_id, op_title, asking_price, Bid.bid_price ' +
+      'FROM Old_Product ' +
+      'JOIN Bid ON Old_Product.op_id = Bid.op_id ' +
+      'WHERE Bid.buyer_id = ?',
+      [userID],
+      (err, allBids) => {
+        if (err) {
+          console.error('Error fetching won bids:', err);
+          return res.status(500).json({ error: 'Internal server error' });
+        }
 
-      // Render the bidsWon page with the products array
-      res.render('bidsWon', { email: email, userID: userID, products: products });
-    });
+        // Query to fetch products where canOrder equals the user ID
+        db.query('SELECT * FROM Old_Product WHERE canOrder = ?', [userID], (err, products) => {
+          if (err) {
+            console.error('Error fetching products:', err);
+            return res.status(500).json({ error: 'Internal server error' });
+          }
+
+          // Render the bidsWon page with all fetched data
+          res.render('bidsWon', { email: email, userID: userID, products: products, allBids: allBids });
+        });
+      }
+    );
   });
 });
+
 
 // view new product details for seller
 app.get("/new-product-seller/:id", authenticateSession, (req, res) => {
@@ -901,6 +918,30 @@ app.put('/update-new-product/:id', (req, res) => {
   console.log(`Product with ID ${productId} updated`);
   res.redirect('http://localhost:55000/seller-dashboard'); 
 });
+
+// show cart
+// app.get('/cart', authenticateSession, (req, res) => {
+//   const user_id = req.session.user.user_id;
+
+//   // Query to fetch all products in the user's cart
+//   db.query(
+//     'SELECT New_Product.p_id, p_title, price, image, quantity ' +
+//     'FROM New_Product ' +
+//     'JOIN contains ON New_Product.p_id = contains.p_id ' +
+//     'JOIN Cart ON contains.cart_item_id = Cart.cart_id ' +
+//     'WHERE Cart.user_id = ?',
+//     [user_id],
+//     (err, cartItems) => {
+//       if (err) {
+//         console.error('Error fetching cart items:', err);
+//         return res.status(500).json({ error: 'Internal server error' });
+//       }
+
+//       // Render the cart page with all fetched data
+//       res.render('cart', { cartItems: cartItems });
+//     }
+//   );
+// }
 
 
 const port = process.env.PORT || 3000;
