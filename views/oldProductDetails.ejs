@@ -234,8 +234,13 @@
 
       <!-- Order Button -->
       <% if (product.canOrder !== null && product.canOrder === userID) { %>
-        <a href="/old-products/<%= product.op_id %>/order" class="btn-action">Order at <%= selling_price%> Taka</a>
-      <% } %>
+        <form action="/order/placeOld" method="POST" class="mb-6">
+          <input type="hidden" name="op_id" value="<%= product.op_id %>">
+          <button type="submit" class="action-btn btn-action">
+            Order at <%= selling_price%> Taka
+          </button>
+      </form>
+        <% } %>
     </div>
 
     <!-- Bidding Section -->

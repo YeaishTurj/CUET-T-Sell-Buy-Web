@@ -65,7 +65,7 @@
                 <% } %>
 
                 <!-- Order Button -->
-                <form action="/orders" method="POST" class="mb-6">
+                <form action="/order/placeNew" method="POST" class="mb-6">
                     <input type="hidden" name="p_id" value="<%= product.p_id %>">
                     <button type="submit" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transition">
                         Order Now
