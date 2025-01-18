@@ -63,49 +63,60 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 15px; /* Reduced padding */
+            margin-bottom: 15px; /* Reduced margin */
             border: 1px solid #ddd;
-            border-radius: 12px;
+            border-radius: 8px; /* Slightly smaller border radius */
             background: #fafafa;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .product-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px); /* Slightly less hover effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .product-title {
-            font-size: 20px;
+            font-size: 18px; /* Reduced font size */
             color: #333;
             font-weight: bold;
         }
 
         .product-price {
-            font-size: 18px;
+            font-size: 16px; /* Reduced font size */
             color: #555;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
         }
 
         .action-btn {
-            padding: 10px 20px;
-            font-size: 16px;
+            width: 100px; /* Reduced button width */
+            height: 36px; /* Reduced button height */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px; /* Reduced font size */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px; /* Slightly smaller border radius */
             text-decoration: none;
             text-align: center;
-            transition: background 0.3s ease, transform 0.2s ease;
+            background-color: #007bff;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .view-details-btn {
@@ -114,7 +125,6 @@
 
         .view-details-btn:hover {
             background-color: #0056b3;
-            transform: scale(1.05);
         }
 
         .order-now-btn {
@@ -123,16 +133,10 @@
 
         .order-now-btn:hover {
             background-color: #1e7e34;
-            transform: scale(1.05);
         }
 
         .remove-btn {
             background-color: #e74c3c;
-            color: white;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
         }
 
         .remove-btn:hover {
@@ -154,8 +158,13 @@
             }
 
             .button-group {
+                flex-direction: column;
+                gap: 10px;
                 width: 100%;
-                justify-content: space-between;
+            }
+
+            .action-btn {
+                width: 100%;
             }
         }
     </style>
@@ -171,40 +180,31 @@
     <!-- Cart Section -->
     <div class="container">
         <h1>Your Cart</h1>
-        <% if (cartItems.length> 0) { %>
+        <% if (cartItems.length > 0) { %>
             <ul class="product-list">
-                <% cartItems.forEach(item=> { %>
+                <% cartItems.forEach(item => { %>
                     <li class="product-item">
                         <div>
-                            <h3 class="product-title">
-                                <%= item.p_title %>
-                            </h3>
-                            <p class="product-price">
-                                <%= item.price %> Taka
-                            </p>
+                            <h3 class="product-title"><%= item.p_title %></h3>
+                            <p class="product-price"><%= item.price %> Taka</p>
                         </div>
                         <div class="button-group">
-                            <a href="/new-products/<%= item.p_id %>" class="action-btn view-details-btn">View
-                                Details</a>
-                            <!-- Order Button -->
-                            <form action="/order/placeNew" method="POST" class="mb-6">
+                            <a href="/new-products/<%= item.p_id %>" class="action-btn view-details-btn">View Details</a>
+                            <form action="/order/placeNew" method="POST">
                                 <input type="hidden" name="p_id" value="<%= item.p_id %>">
-                                <button type="submit" class="action-btn order-now-btn">
-                                    Order Now
-                                </button>
+                                <button type="submit" class="action-btn order-now-btn">Order Now</button>
                             </form>
                             <form action="/cart/remove" method="POST">
                                 <input type="hidden" name="p_id" value="<%= item.p_id %>">
                                 <button type="submit" class="action-btn remove-btn">Remove</button>
                             </form>
-
                         </div>
                     </li>
-                    <% }) %>
+                <% }) %>
             </ul>
-            <% } else { %>
-                <p class="no-data">Your cart is empty.</p>
-                <% } %>
+        <% } else { %>
+            <p class="no-data">Your cart is empty.</p>
+        <% } %>
     </div>
 </body>
 

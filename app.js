@@ -104,35 +104,7 @@ app.post('/register/seller', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-app.get('/seller/orders', authenticateSession, (req, res) => {
-  if (req.session.user.role === 'Seller') {
-    const userId = req.session.user.user_id;
 
-
-    db.query(`
-      SELECT O.o_id, O.o_date, O.p_id, O.user_id, P.p_title, P.price, C.quantity 
-      FROM Order O
-      JOIN Product P ON O.p_id = P.p_id
-      JOIN Cart C ON C.cart_id = O.cart_id
-      WHERE P.user_id = ?`, [userId], (err, orders) => {
-
-      if (err) {
-        return res.status(500).json({ success: false, error: err.message });
-      }
-
-
-      res.render('sellerDashboard', {
-        user: req.session.user,
-        products: [],
-        oldProducts: [],
-        pendingOrders: [],
-        orders: orders
-      });
-    });
-  } else {
-    res.redirect('/');
-  }
-});
 
 
 app.post('/register/buyer', async (req, res) => {
@@ -277,46 +249,6 @@ app.get('/seller-dashboard', authenticateSession, (req, res) => {
   } else {
     res.redirect('/');
   }
-});
-
-
-app.post('/order/approve/:cartId', authenticateSession, (req, res) => {
-  const cartId = req.params.cartId;
-
-
-  db.query("SELECT * FROM Cart WHERE cart_id = ?", [cartId], (err, cartItem) => {
-    if (err) {
-      return res.status(500).json({ success: false, error: err.message });
-    }
-
-
-    if (cartItem.length === 0) {
-      return res.status(404).json({ success: false, message: "Cart item not found." });
-    }
-
-    const item = cartItem[0];
-
-
-    db.query("INSERT INTO `Order` (o_date, p_id, user_id) VALUES (NOW(), ?, ?)",
-      [item.p_id, item.user_id],
-      (err, result) => {
-        if (err) {
-          return res.status(500).json({ success: false, error: err.message });
-        }
-
-        const orderId = result.insertId;
-
-
-        db.query("DELETE FROM Cart WHERE cart_id = ?", [cartId], (err) => {
-          if (err) {
-            return res.status(500).json({ success: false, error: err.message });
-          }
-
-
-          res.json({ success: true, message: 'Order approved and cart item removed successfully!', orderId });
-        });
-      });
-  });
 });
 
 
@@ -649,7 +581,6 @@ app.put('/update-old-product/:id', (req, res) => {
     }
   );
 
-  console.log(`Product with ID ${productId} updated`);
   res.redirect(`http://localhost:55000/seller-dashboard`);
 });
 
@@ -667,7 +598,6 @@ app.put('/permit-order/:id', (req, res) => {
   }
   );
 
-  console.log(`Order with ID ${oldProductID} permitted to be processed by user with ID ${userID}`);
   res.redirect('http://localhost:55000/seller-dashboard'); // Redirect to the seller dashboard or wherever you prefer
 });
 
@@ -769,7 +699,6 @@ app.put('/update-new-product/:id', (req, res) => {
     }
   );
 
-  console.log(`Product with ID ${productId} updated`);
   res.redirect('http://localhost:55000/seller-dashboard');
 });
 
@@ -777,7 +706,6 @@ app.put('/update-new-product/:id', (req, res) => {
 app.post('/cart/add', authenticateSession, (req, res) => {
   var cart_item_id = req.body.p_id;
   var user_id = req.session.user.user_id;
-  console.log(cart_item_id, user_id);
 
   db.query('INSERT INTO Cart (user_id, cart_item_id) VALUES (?, ?)', [user_id, cart_item_id], (err) => {
     if (err) {

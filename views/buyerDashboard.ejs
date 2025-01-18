@@ -5,62 +5,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buyer Dashboard</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
-        /* Optional custom styles for dashboard */
+        /* General Styling */
         body {
-            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+            color: #333;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h4 {
+            color: #3a3a3a;
+            font-size: 24px;
+        }
+
+        h5 {
+            color: #495057;
+            font-size: 22px;
+        }
+
+        /* Header */
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        /* Dashboard Info Section */
+        .dashboard-info {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-info p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .dashboard-info strong {
+            color: #495057;
+        }
+
+        /* Action Buttons Section */
+        .action-buttons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px; /* Rounded corners for modern look */
+            transition: all 0.3s ease;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Colors */
+        .view-products {
+            background-color: #007bff; /* Blue background */
+        }
+
+        .view-products:hover {
+            background-color: #0056b3; /* Darker blue */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05); /* Button enlargement effect */
+        }
+
+        .placed-bids {
+            background-color: #28a745; /* Green background */
+        }
+
+        .placed-bids:hover {
+            background-color: #218838; /* Darker green */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .your-cart {
+            background-color: #20c997; /* Teal background */
+        }
+
+        .your-cart:hover {
+            background-color: #17a88b; /* Darker teal */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .pending-orders {
+            background-color: #17a2b8; /* Cyan background */
+        }
+
+        .pending-orders:hover {
+            background-color: #138496; /* Darker cyan */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .logout {
+            background-color: #dc3545; /* Red background */
+        }
+
+        .logout:hover {
+            background-color: #c82333; /* Darker red */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-buttons a {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body>
 
-    <!-- Main Container -->
-    <div class="min-h-screen flex justify-center items-center px-4 py-8">
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Welcome to Your Buyer Dashboard</h1>
+        </header>
 
-        <div class="bg-white p-8 rounded-xl shadow-xl max-w-md w-full">
-
-            <!-- Welcome Section -->
-            <h4 class="text-2xl font-semibold text-center text-gray-800 mb-4">Welcome, <%= user.email %></h4>
-            <p class="text-center text-gray-600 mb-6">Your Role: <strong class="text-indigo-600"><%= user.role %></strong></p>
-
-            <!-- Dashboard Information -->
-            <div class="mb-8">
-                <h5 class="text-xl font-medium text-gray-800">Buyer Dashboard</h5>
-                <p class="text-gray-600 mt-2">Explore products, manage your orders, and enjoy shopping.</p>
+        <!-- Dashboard Section -->
+        <div class="dashboard-info">
+            <h4>Welcome, <%= user.email %></h4>
+            <p>Your Role: <strong><%= user.role %></strong></p>
+            <div>
+                <h5>Buyer Dashboard</h5>
+                <p>Explore products, manage your orders, and enjoy shopping.</p>
             </div>
+        </div>
 
-            <!-- Action Buttons Section -->
-            <div class="space-y-4">
-                <!-- View Products Button -->
-                <a href="/products" class="block w-full text-center py-3 px-4 mb-4 bg-indigo-600 text-white rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300">
-                    View Products
-                </a>
-                <!-- Your Bids Button -->
-                <a href="/wonBids/<%= user.email %>" class="block w-full text-center py-3 px-4 mb-4 bg-gray-800 text-white rounded-md shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50 transition duration-300">
-                    Placed Bids
-                </a>
-
-                <!-- Your cart -->
-                <a href="/cart/show" class="block w-full text-center py-3 px-4 mb-4 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-300">
-                    Your Cart
-                
-                <!-- Your placed order -->
-                <a href="/order/view" class="block w-full text-center py-3 px-4 mb-4 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-300">
-                    Your Pending Orders
-
-
-                <!-- Logout Button -->
-                <a href="/logout" class="block w-full text-center py-3 px-4 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300">
-                    Logout
-                </a>
-            </div>
-
+        <!-- Action Buttons Section -->
+        <div class="action-buttons">
+            <a href="/products" class="view-products">View Products</a>
+            <a href="/wonBids/<%= user.email %>" class="placed-bids">Placed Bids</a>
+            <a href="/cart/show" class="your-cart">Your Cart</a>
+            <a href="/order/view" class="pending-orders">Your Pending Orders</a>
+            <a href="/logout" class="logout">Logout</a>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 CUET T-Sell & Buy. All rights reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
 
 </body>
 
