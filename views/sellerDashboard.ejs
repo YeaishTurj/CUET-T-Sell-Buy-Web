@@ -19,56 +19,56 @@
     <div class="flex h-screen">
 
         <!-- Sidebar -->
-        <div class="w-64 text-white p-6 flex flex-col justify-between shadow-xl transition-all duration-300 ease-in-out" style="background-color: #2C3E50;">
+        <div class="w-56 text-white p-5 flex flex-col justify-between shadow-xl transition-all duration-300 ease-in-out"
+            style="background-color: #2C3E50;">
             <div>
-                <h1 class="text-3xl font-semibold mb-8">Seller Dashboard</h1>
+                <h1 class="text-2xl font-semibold mb-6">Seller Dashboard</h1>
                 <nav>
                     <ul>
-                        <li class="mb-6">
-                          
+                        <li class="mb-5">
+                            <a href="/seller/new-products"
+                                class="text-base hover:text-indigo-300 transition-colors">Add New Products</a>
+                        </li>
+                        <li class="mb-5">
+                            <a href="/seller/old-products"
+                                class="text-base hover:text-indigo-300 transition-colors">Add Old Products</a>
                         </li>
                         <li class="mb-6">
-                            <a href="/seller/new-products" class="text-lg hover:text-indigo-200 transition-colors">Add New Products</a>
+                            <a href="/products"
+                                class="text-base hover:text-indigo-300 transition-colors">View Products</a>
                         </li>
-                        <li class="mb-6">
-                          <a href="/seller/old-products" class="text-lg hover:text-indigo-200 transition-colors">Add Old Products</a>
-                          </li>
-                          <li class="mb-7">
-                            <a href="/products" class="text-lg hover:text-indigo-200 transition-colors">View Products</a>
-                          </li>
-
+                    </ul>
                 </nav>
             </div>
             <div>
-                <p class="text-sm text-center text-gray-200">© 2024 Seller Dashboard</p>
+                <p class="text-xs text-center text-gray-200">© 2024 Seller Dashboard</p>
             </div>
         </div>
 
         <!-- Main Content Area -->
-        <div class="flex-1 p-8 overflow-y-auto bg-gray-300">
+        <div class="flex-1 p-6 overflow-y-auto bg-gray-300">
 
             <!-- Header Section -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-semibold text-gray-800">Welcome, <%= user.email %></h2>
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800">Welcome, <%= user.email %></h2>
                 <p class="mt-2 text-lg text-gray-700">Your Role: <strong><%= user.role %></strong></p>
             </div>
 
             <!-- Section: New Products -->
-            <section class="mb-16">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Your New Products</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <section class="mb-12">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Your New Products</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <% if (products.length > 0) { %>
                         <% products.forEach(product => { %>
-                            <div class="bg-gray-100 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                                <div class="p-4">
-                                    <img src="<%= product.image %>" alt="<%= product.p_title %>" class="w-full h-48 object-cover rounded-md mb-4">
-                                    <h4 class="text-xl font-semibold text-gray-800"><%= product.p_title %></h4>
+                            <a href="/new-product-seller/<%= product.p_id %>"
+                                class="block bg-gray-100 shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
+                                <div class="p-3 h-full flex flex-col">
+                                    <img src="<%= product.image %>" alt="<%= product.p_title %>"
+                                        class="w-full h-40 object-contain rounded-md mb-4 flex-grow">
+                                    <h4 class="text-lg font-semibold text-gray-800"><%= product.p_title %></h4>
                                     <p class="text-gray-600 mt-2"><strong>Price:</strong> <%= product.price %> Taka</p>
-                                    <p class="text-gray-500 mt-2"><%= product.desc.substring(0, 100) %>...</p>
-                                    
-                                    <a href="/new-product-seller/<%= product.p_id %>" class="inline-block mt-4 text-indigo-600 hover:text-indigo-500 text-sm font-medium">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                         <% }) %>
                     <% } else { %>
                         <p class="text-center text-gray-500">You haven't added any new products yet.</p>
@@ -77,21 +77,20 @@
             </section>
 
             <!-- Section: Old Products -->
-            <section class="mb-16">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Your Old Products</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <section class="mb-12">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Your Old Products</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <% if (oldProducts.length > 0) { %>
                         <% oldProducts.forEach(product => { %>
-                            <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                                <div class="p-4">
-                                    <img src="<%= product.image %>" alt="<%= product.op_title %>" class="w-full h-48 object-cover rounded-md mb-4">
-                                    <h4 class="text-xl font-semibold text-gray-800"><%= product.op_title %></h4>
+                            <a href="/old-products-seller/<%= product.op_id %>"
+                                class="block bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:scale-105 transform transition-all duration-300">
+                                <div class="p-3 h-full flex flex-col">
+                                    <img src="<%= product.image %>" alt="<%= product.op_title %>"
+                                        class="w-full h-40 object-contain rounded-md mb-4 flex-grow">
+                                    <h4 class="text-lg font-semibold text-gray-800"><%= product.op_title %></h4>
                                     <p class="text-gray-600 mt-2"><strong>Asking Price:</strong> <%= product.asking_price %> Taka</p>
-                                    <p class="text-gray-500 mt-2"><%= product.op_desc.substring(0, 100) %>...</p>
-
-                                    <a href="/old-products-seller/<%= product.op_id %>" class="inline-block mt-4 text-green-600 hover:text-green-500 text-sm font-medium">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                         <% }) %>
                     <% } else { %>
                         <p class="text-center text-gray-500">You haven't added any old products yet.</p>
@@ -100,21 +99,21 @@
             </section>
 
             <!-- Section: Pending Orders -->
-            <section class="mb-16">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Pending Orders</h3>
-                <div class="space-y-6">
+            <section class="mb-12">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Pending Orders</h3>
+                <div class="space-y-4">
                     <% if (pendingOrders.length > 0) { %>
                         <% pendingOrders.forEach(order => { %>
-                            <div class="bg-white p-6 shadow-md rounded-lg flex justify-between items-center">
+                            <div class="bg-white p-4 shadow-md rounded-lg flex justify-between items-center hover:shadow-lg transform transition-all duration-300">
                                 <div>
-                                    <h4 class="text-xl font-semibold text-gray-800"><%= order.p_title %></h4>
-                                    <p class="text-gray-600 mt-2">Quantity: <%= order.quantity %></p>
-                                    <p class="text-gray-600 mt-1">Price: $<%= order.price %></p>
+                                    <h4 class="text-lg font-semibold text-gray-800"><%= order.title %></h4>
+                                    <p class="text-gray-600 mt-1">Price: <%= order.price %> Taka</p>
                                     <p class="text-gray-600 mt-1">Buyer: <%= order.user_id %></p>
                                 </div>
                                 <div class="ml-4">
-                                    <form action="/order/approve/<%= order.o_id %>" method="POST">
-                                        <button type="submit" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md text-sm font-medium hover:bg-green-700 transition-colors">
+                                    <form action="/order/approve/<%= order.o_id %>?_method=DELETE" method="POST">
+                                        <button type="submit"
+                                            class="inline-block bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors">
                                             Approve Order
                                         </button>
                                     </form>
@@ -125,16 +124,18 @@
                         <p class="text-center text-gray-500">No pending orders at the moment.</p>
                     <% } %>
                 </div>
-                
             </section>
-            <body style="background-color: lightgray;">
-                <a href="/logout" style="display: block; margin: 10px auto; padding: 10px 20px; background-color: #131212; color: white; text-decoration: none; text-align: center; width: 100px; border-radius: 5px; font-weight: bold;">Logout</a>
-              </body>
 
+            <!-- Logout Button -->
+            <div class="text-center">
+                <a href="/logout"
+                    class="inline-block bg-gray-800 text-white px-4 py-2 rounded-md font-medium shadow-md hover:bg-gray-700 hover:shadow-lg transition-all duration-300">
+                    Logout
+                </a>
+            </div>
         </div>
-        
+
     </div>
-    
 
 </body>
 

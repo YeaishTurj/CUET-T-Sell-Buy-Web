@@ -214,40 +214,80 @@ app.get('/products', (req, res) => {
   });
 });
 
-
-
-app.get('/seller-dashboard', authenticateSession, (req, res) => {
-  if (req.session.user.role === 'Seller') {
-    const userId = req.session.user.user_id;
-
-
-    db.query("SELECT * FROM New_Product WHERE user_id = ?", [userId], (err, newProducts) => {
-      if (err) return res.status(500).json({ success: false, error: err.message });
-
-
-      db.query("SELECT * FROM Old_Product WHERE user_id = ?", [userId], (err, oldProducts) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-
-
-        db.query(`
-          SELECT c.cart_id, c.user_id, c.p_id
-          FROM Cart c
-          JOIN New_Product p ON c.p_id = p.p_id
-          WHERE p.user_id = ?`, [userId], (err, pendingOrders) => {
-          if (err) return res.status(500).json({ success: false, error: err.message });
-
-
-          res.render('sellerDashboard', {
-            user: req.session.user,
-            products: newProducts,
-            oldProducts: oldProducts,
-            pendingOrders: pendingOrders
-          });
-        });
-      });
+const query = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
     });
-  } else {
-    res.redirect('/');
+  });
+};
+
+app.get('/seller-dashboard', authenticateSession, async (req, res) => {
+  if (req.session.user.role !== 'Seller') {
+    return res.redirect('/');
+  }
+
+  const userId = req.session.user.user_id;
+
+  try {
+    // Fetch new products
+    const newProducts = await query("SELECT * FROM New_Product WHERE user_id = ?", [userId]);
+
+    // Fetch old products
+    const oldProducts = await query("SELECT * FROM Old_Product WHERE user_id = ?", [userId]);
+
+    // Fetch new pending orders
+    const q1 = `
+      SELECT 
+        \`Order\`.o_id, New_Product.p_title as title, New_Product.price as price, \`Order\`.o_date, \`Order\`.user_id 
+      FROM 
+        \`Order\` 
+      INNER JOIN 
+        New_Product ON \`Order\`.np_id = New_Product.p_id 
+      WHERE 
+        New_Product.user_id = ?`;
+    const newPendingOrders = await query(q1, [userId]);
+
+    // Fetch old pending orders
+    const q2 = `
+      SELECT 
+        \`Order\`.o_id, Old_Product.op_title as title, Old_Product.selling_price as price, \`Order\`.o_date , \`Order\`.user_id
+      FROM 
+        \`Order\` 
+      INNER JOIN 
+        Old_Product ON \`Order\`.op_id = Old_Product.op_id 
+      WHERE 
+        Old_Product.user_id = ?`;
+    const oldPendingOrders = await query(q2, [userId]);
+
+    // Combine pending orders
+    const pendingOrders = [
+      ...newPendingOrders.map(order => ({
+        ...order,
+        op_type: 'new',
+      })),
+      ...oldPendingOrders.map(order => ({
+        ...order,
+        op_type: 'old',
+      })),
+    ];
+
+    // Render the seller dashboard
+    res.render('sellerDashboard', {
+      user: req.session.user,
+      products: newProducts,
+      oldProducts: oldProducts,
+      pendingOrders: pendingOrders,
+    });
+
+  } catch (error) {
+    console.error('Error fetching data for seller dashboard:', error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while fetching the seller dashboard data.',
+      error: error.message,
+    });
   }
 });
 
@@ -667,7 +707,7 @@ app.get("/new-product-seller/:id", authenticateSession, (req, res) => {
     const product = rows[0];
 
 
-    db.query("SELECT * FROM Cart WHERE user_id = ? AND p_id = ?", [user_id, id], (err, cartRows) => {
+    db.query("SELECT * FROM Cart WHERE user_id = ? AND cart_item_id = ?", [user_id, id], (err, cartRows) => {
       if (err) {
 
         return res.status(500).json({ success: false, error: err.message });
@@ -819,6 +859,20 @@ app.get('/order/view', authenticateSession, (req, res) => {
 
 
 });
+
+// order approval by seller
+app.delete('/order/approve/:id', (req, res) => {
+  const orderId = req.params.id;
+
+  db.query('DELETE FROM `Order` WHERE o_id = ?', [orderId], (err) => {
+    if (err) {
+      console.error('Error approving order:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.redirect('/seller-dashboard');
+  });
+}
+);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
