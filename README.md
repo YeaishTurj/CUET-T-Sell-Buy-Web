@@ -131,6 +131,8 @@ Follow these steps to run the project locally:
 
 - **[Towhidul Islam](https://github.com/Towhid454)**
 
+---
+
 ## ❗Note
 
 This project is intended for internal use within the CUET community. No license is associated with this repository.
